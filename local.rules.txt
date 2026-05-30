@@ -1,0 +1,12 @@
+# ====================================================================
+# CodeAlpha - Custom Network Intrusion Detection System (Snort Rules)
+# ====================================================================
+
+# Rule 1: Detect ICMP Floods or standard Ping activities
+alert icmp any any -> $HOME_NET any (msg:"[CodeAlpha NIDS] ICMP Ping Packet Detected"; sid:1000001; rev:1;)
+
+# Rule 2: Detect Aggressive TCP Port Scanning / Nmap Reconnaissance activity
+alert tcp any any -> $HOME_NET any (msg:"[CodeAlpha NIDS] Potential Nmap Stealth TCP Scan Detected"; flags:S; threshold:type both, track by_src, count 20, seconds 10; sid:1000002; rev:1;)
+
+# Rule 3: Detect unauthorized access attempts over insecure HTTP channels
+alert tcp any any -> $HOME_NET 80 (msg:"[CodeAlpha NIDS] Inbound HTTP Connection to Web Services"; sid:1000003; rev:1;)
